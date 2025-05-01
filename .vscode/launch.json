@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Run TSX",
+        "runtimeExecutable": "C:/Users/26448/AppData/Roaming/npm/ts-node.cmd",
+        "args": ["--esm", "--jsx", "react", "${file}"],
+        "skipFiles": ["<node_internals>/**"]
+      }
+    ]
+  }
