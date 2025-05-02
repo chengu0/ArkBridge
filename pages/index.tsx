@@ -5,6 +5,8 @@ import { FileUploader } from '@/components/FileUploader';
 import { TranslateBody } from '@/types/types'; 
 import Head from 'next/head'; 
 import { useEffect, useState } from 'react'; 
+import { useRouter } from 'next/router';
+
 export default function Home() { 
   const [inputLanguage, setInputLanguage] = useState<string>('自然语言'); 
   const [outputLanguage, setOutputLanguage] = useState<string>('Python'); 
@@ -15,6 +17,7 @@ export default function Home() {
   // 收集think标签中的思考内容 
   const [thoughtProcess, setThoughtProcess] = useState<string>(''); 
   const [showFileUpload, setShowFileUpload] = useState<boolean>(false); 
+  const router = useRouter();
   const handleTranslate = async () => { 
     try {
       // 初始化状态
@@ -122,118 +125,128 @@ export default function Home() {
         <link rel="canonical" href="https://code.ikiwi.com" /> 
         <link rel="icon" href="/code.png" /> 
       </Head> 
-      <div className="h-100 flex justify-start items-center pl-10 pt-2 bg-white"> 
-        <img className="w-50 h-50" alt="AICodeConverter" src="code.png" /> 
-        <h1 className="text-black font-bold text-2xl"><span className="text-blue-500 ml-2"></span></h1> 
-      </div> 
-      <div className="flex h-full min-h-screen flex-col items-center bg-white px-4 pb-20 text-neutral-800 sm:px-10"> 
-        <div className="mt-2 flex flex-col items-center justify-center sm:mt-1"> 
-          <h2 className="text-4xl font-bold leading-[1.5] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text mb-0">ArkBridge 方舟桥</h2> 
-          <div className="mt-5 text-xl text-center leading-2">翻译并解释一种 <span className="text-blue-500 font-bold">编程语言</span> 或者 <span className="text-blue-500 font-bold">自然语言</span> 到 
-            另一种 <span className="text-blue-500 font-bold">编程语言</span></div> 
-        </div> 
-        <div className="mt-6 flex w-full max-w-[1200px] flex-col justify-between sm:flex-row sm:space-x-4"> 
-          <div className="h-100 flex flex-col justify-center space-y-2 sm:w-2/4"> 
-            <div className="text-center text-xl font-bold">原始输入</div> 
-            <LanguageSelect 
-              language={inputLanguage} 
-              onChange={(value) => { 
-                setInputLanguage(value); 
-                setHasTranslated(false); 
-              }} 
-            /> 
-            <div className="flex space-x-2 mb-2"> 
-              <button 
-                className={`px-4 py-2 rounded-md ${!showFileUpload ? 'bg-blue-500' : 'bg-gray-500'}`} 
-                onClick={() => setShowFileUpload(false)} 
-              > 
-                单文件模式 
-              </button> 
-              <button 
-                className={`px-4 py-2 rounded-md ${showFileUpload ? 'bg-blue-500' : 'bg-gray-500'}`} 
-                onClick={() => setShowFileUpload(true)} 
-              > 
-                工程模式 
-              </button> 
+      <div style={{display:'flex', minHeight:'100vh', background:'#fff'}}> 
+        {/* 侧边栏 */}
+        <div style={{width:200, background:'#f5f5f5', borderRight:'1px solid #eee', display:'flex', flexDirection:'column', alignItems:'center', paddingTop:32}}>
+          <img src="/code.png" alt="ArkB Logo" style={{width:80, marginBottom:32}} />
+          <button onClick={()=>router.push('/history')} style={{width:'80%', marginBottom:16, padding:'10px 0', borderRadius:8, border:'none', background:'#1976d2', color:'#fff', fontWeight:'bold', cursor:'pointer'}}>历史记录</button>
+          <button onClick={()=>router.push('/profile')} style={{width:'80%', marginBottom:16, padding:'10px 0', borderRadius:8, border:'none', background:'#1976d2', color:'#fff', fontWeight:'bold', cursor:'pointer'}}>个人中心</button>
+        </div>
+        {/* 主内容区 */}
+        <div style={{flex:1}}>
+          <div className="h-100 flex justify-start items-center pl-10 pt-2 bg-white"> 
+            <img className="w-50 h-50" alt="AICodeConverter" src="code.png" /> 
+            <h1 className="text-black font-bold text-2xl"><span className="text-blue-500 ml-2"></span></h1> 
+          </div> 
+          <div className="flex h-full min-h-screen flex-col items-center bg-white px-4 pb-20 text-neutral-800 sm:px-10"> 
+            <div className="mt-2 flex flex-col items-center justify-center sm:mt-1"> 
+              <h2 className="text-4xl font-bold leading-[1.5] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-transparent bg-clip-text mb-0">ArkBridge 方舟桥</h2> 
+              <div className="mt-5 text-xl text-center leading-2">翻译并解释一种 <span className="text-blue-500 font-bold">编程语言</span> 或者 <span className="text-blue-500 font-bold">自然语言</span> 到 另一种 <span className="text-blue-500 font-bold">编程语言</span></div> 
             </div> 
-            {showFileUpload ? ( 
-              <FileUploader 
-                inputLanguage={inputLanguage} 
-                outputLanguage={outputLanguage} 
-                onUploadComplete={handleFileUploadComplete} 
-              /> 
-            ) : ( 
-              <> 
-                {inputLanguage === '自然语言' ? ( 
-                  <TextBlock 
-                    text={inputCode} 
-                    editable={!loading} 
-                    onChange={(value) => { 
-                      setInputCode(value); 
-                      setHasTranslated(false); 
-                    }} 
+            <div className="mt-6 flex w-full max-w-[1200px] flex-col justify-between sm:flex-row sm:space-x-4"> 
+              <div className="h-100 flex flex-col justify-center space-y-2 sm:w-2/4"> 
+                <div className="text-center text-xl font-bold">原始输入</div> 
+                <LanguageSelect 
+                  language={inputLanguage} 
+                  onChange={(value) => { 
+                    setInputLanguage(value); 
+                    setHasTranslated(false); 
+                  }} 
+                /> 
+                <div className="flex space-x-2 mb-2"> 
+                  <button 
+                    className={`px-4 py-2 rounded-md ${!showFileUpload ? 'bg-blue-500' : 'bg-gray-500'}`} 
+                    onClick={() => setShowFileUpload(false)} 
+                  > 
+                    单文件模式 
+                  </button> 
+                  <button 
+                    className={`px-4 py-2 rounded-md ${showFileUpload ? 'bg-blue-500' : 'bg-gray-500'}`} 
+                    onClick={() => setShowFileUpload(true)} 
+                  > 
+                    工程模式 
+                  </button> 
+                </div> 
+                {showFileUpload ? ( 
+                  <FileUploader 
+                    inputLanguage={inputLanguage} 
+                    outputLanguage={outputLanguage} 
+                    onUploadComplete={handleFileUploadComplete} 
                   /> 
                 ) : ( 
-                  <CodeBlock 
-                    code={inputCode} 
-                    editable={!loading} 
-                    onChange={(value) => { 
-                      setInputCode(value); 
-                      setHasTranslated(false); 
-                    }} 
-                  /> 
+                  <> 
+                    {inputLanguage === '自然语言' ? ( 
+                      <TextBlock 
+                        text={inputCode} 
+                        editable={!loading} 
+                        onChange={(value) => { 
+                          setInputCode(value); 
+                          setHasTranslated(false); 
+                        }} 
+                      /> 
+                    ) : ( 
+                      <CodeBlock 
+                        code={inputCode} 
+                        editable={!loading} 
+                        onChange={(value) => { 
+                          setInputCode(value); 
+                          setHasTranslated(false); 
+                        }} 
+                      /> 
+                    )} 
+                  </> 
                 )} 
-              </> 
-            )} 
+              </div> 
+              <div className="mt-8 flex h-full flex-col justify-center space-y-2 sm:mt-0 sm:w-2/4"> 
+                <div className="text-center text-xl font-bold">转换后的语言</div> 
+                <LanguageSelect 
+                  language={outputLanguage} 
+                  onChange={(value) => { 
+                    setOutputLanguage(value); 
+                    setOutputCode(''); 
+                  }} 
+                /> 
+                {( 
+                  <TextBlock text={outputCode} /> 
+                ) } 
+                {/* 可折叠的思考过程区域 */}
+                <details className="mt-4 w-full max-w-[1200px] text-left bg-[#1f2937] p-3 rounded"> 
+                  <summary className="cursor-pointer text-blue-400">代码释意</summary> 
+                  <div className="mt-2 p-4 bg-[#1f2937] rounded">
+                    <pre className="whitespace-pre-wrap text-sm text-gray-300"> 
+                      {thoughtProcess || '暂无代码释意'} 
+                    </pre>
+                  </div>
+                </details>
+              </div> 
+            </div> 
+            <div className="mt-5 text-center text-sm"> 
+              {loading 
+                ? '别着急，我们的模型正在为您转译'// Generating 
+                : hasTranslated 
+                  ? '复制到剪贴板!' 
+                  : '选择语言类型并输入自然语言文字或者代码，然后点击 "转译" 按钮'} 
+            </div> 
+            <div className="mt-5 flex items-center space-x-2"> 
+              <button 
+                className="w-[140px] cursor-pointer rounded-md bg-blue-500 px-4 py-2 font-bold hover:bg-blue-600 active:bg-blue-700" 
+                onClick={() => handleTranslate()} 
+                disabled={loading} 
+              > 
+                {loading ? '转译中...' : '转译'} 
+              </button>
+              {hasTranslated && (
+                <button 
+                  className="w-[140px] cursor-pointer rounded-md bg-gray-500 px-4 py-2 font-bold hover:bg-gray-600 active:bg-gray-700"
+                  onClick={handleReset}
+                >
+                  重新转译
+                </button>
+              )}
+            </div> 
           </div> 
-          <div className="mt-8 flex h-full flex-col justify-center space-y-2 sm:mt-0 sm:w-2/4"> 
-            <div className="text-center text-xl font-bold">转换后的语言</div> 
-            <LanguageSelect 
-              language={outputLanguage} 
-              onChange={(value) => { 
-                setOutputLanguage(value); 
-                setOutputCode(''); 
-              }} 
-            /> 
-            {( 
-              <TextBlock text={outputCode} /> 
-            ) } 
-            {/* 可折叠的思考过程区域 */}
-            <details className="mt-4 w-full max-w-[1200px] text-left bg-[#1f2937] p-3 rounded"> 
-              <summary className="cursor-pointer text-blue-400">代码释意</summary> 
-              <div className="mt-2 p-4 bg-[#1f2937] rounded">
-                <pre className="whitespace-pre-wrap text-sm text-gray-300"> 
-                  {thoughtProcess || '暂无代码释意'} 
-                </pre>
-              </div>
-            </details>
-          </div> 
-        </div> 
-        <div className="mt-5 text-center text-sm"> 
-          {loading 
-            ? '别着急，我们的模型正在为您转译'// Generating 
-            : hasTranslated 
-              ? '复制到剪贴板!' 
-              : '选择语言类型并输入自然语言文字或者代码，然后点击 "转译" 按钮'} 
-        </div> 
-        <div className="mt-5 flex items-center space-x-2"> 
-          <button 
-            className="w-[140px] cursor-pointer rounded-md bg-blue-500 px-4 py-2 font-bold hover:bg-blue-600 active:bg-blue-700" 
-            onClick={() => handleTranslate()} 
-            disabled={loading} 
-          > 
-            {loading ? '转译中...' : '转译'} 
-          </button>
-          {hasTranslated && (
-            <button 
-              className="w-[140px] cursor-pointer rounded-md bg-gray-500 px-4 py-2 font-bold hover:bg-gray-600 active:bg-gray-700"
-              onClick={handleReset}
-            >
-              重新转译
-            </button>
-          )}
-        </div> 
-      </div> 
+        </div>
+      </div>
     </> 
   ); 
 } 
