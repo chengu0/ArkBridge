@@ -33,7 +33,7 @@ USER nextjs
 
 ENV NEXT_PUBLIC_OPENAI_API_BASE_URL "https://openai-2zn.pages.dev/api/v1/chat/completions"
 ENV NEXT_PUBLIC_OPENAI_MODEL "gpt-3.5-turbo"
-ENV NEXT_PUBLIC_OPENAI_API_KEY "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"
+ENV NEXT_PUBLIC_OPENAI_API_KEY ""
 
 EXPOSE 3000
 
