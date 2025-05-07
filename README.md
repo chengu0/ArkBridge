@@ -1,6 +1,6 @@
 # AI 代码转译工具
 
-![main](Photos\main.png "main")
+![main](main/Photos/main.png "main")
 ## 支持的编程语言有：
 ```bash
 Android
