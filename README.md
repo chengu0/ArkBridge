@@ -1,6 +1,8 @@
 # AI 代码转译工具
 
 ![main](https://github.com/chengu0/ArkBridge/blob/main/Photos/main.png)
+![main](https://github.com/chengu0/ArkBridge/blob/main/Photos/history.png)
+![main](https://github.com/chengu0/ArkBridge/blob/main/Photos/person.png)
 ## 支持的编程语言有：
 ```bash
 Android
