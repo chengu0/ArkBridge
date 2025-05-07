@@ -1,0 +1,4 @@
+NEXT_PUBLIC_OPENAI_API_BASE_URL=https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation
+NEXT_PUBLIC_OPENAI_MODEL=qwen-turbo
+NEXT_PUBLIC_OPENAI_API_KEY=sk-571d3ee66f15458c966174dfb2433155
+Dockerfile 36 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

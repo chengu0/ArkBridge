@@ -9,7 +9,7 @@ auth_bp = Blueprint('auth', __name__)
 def register():
     data = request.get_json()
     
-    if not all(k in data for k in ['phone', 'password', 'verify_code']):
+    if not all(k in data for k in ['phone', 'password']):
         return jsonify({'message': '缺少必要参数'}), 400
         
     if User.query.filter_by(phone=data['phone']).first():
