@@ -1,6 +1,6 @@
 # AI 代码转译工具
 
-![图片alt](D:\CodeT5-main\ArkBridge\Photos\main "图片title")
+![图片alt](D:\CodeT5-main\ArkBridge\Photos\main.png "main")
 ## 支持的编程语言有：
 ```bash
 Android
